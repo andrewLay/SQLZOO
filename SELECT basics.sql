@@ -9,12 +9,6 @@ Angola	    Africa      1246700 20609294    100990000000
 ....
 */
 
--- Show the population of Germany
-
-SELECT population
-FROM world
-WHERE name = 'Germany'
-
 -- Show the name and the population for 'Sweden', 'Norway' and 'Denmark'
 
 SELECT name, population
