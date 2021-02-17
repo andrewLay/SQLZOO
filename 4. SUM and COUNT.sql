@@ -41,6 +41,7 @@ WHERE population >= 10000000
 GROUP BY continent
 
 -- List the continents that have a total population of at least 100 million
+/* HAVING CLAUSE USED FOR AGGREGATE FUNCTIONS LIKE SUM() OR COUNT() WHEREAS WHERE CLAUSE COULD NOT ACCEPT AGGREGATES */
 
 SELECT continent
 FROM world
