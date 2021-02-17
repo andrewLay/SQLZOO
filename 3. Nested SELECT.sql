@@ -67,6 +67,7 @@ FROM world x
 WHERE 25000000 >= ALL(SELECT population FROM world y WHERE x.continent = y.continent)
                                                                
 -- Give the countries and continents that have populations more than three times that of any of their neighbours (in the same continent)
+/* ALL CLAUSE ITERATES OVER EACH ROW RETURNED FROM NESTED SELECTS; ALSO NEED TO EXCLUDE CHECKING A COUNTRY'S POP AGAINST ITSELF */
 
 SELECT name, continent
 FROM world x
