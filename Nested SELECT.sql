@@ -53,3 +53,21 @@ WHERE gdp > ALL(SELECT gdp FROM world WHERE continent = 'Europe' AND gdp > 0)
 SELECT continent, name, area
 FROM world x
 WHERE area >= ALL (SELECT area FROM world y WHERE x.continent = y.continent AND area > 0)
+
+-- List each continent and the name of the country that comes first alphabetically
+                                                               
+SELECT continent, MIN(name)
+FROM world
+GROUP BY continent
+                                                               
+-- Find the continents where all countries have a population <= 25000000, then find the names of the countries associated with these continents
+                                                               
+SELECT name, continent, population
+FROM world x
+WHERE 25000000 >= ALL(SELECT population FROM world y WHERE x.continent = y.continent)
+                                                               
+-- Give the countries and continents that have populations more than three times that of any of their neighbours (in the same continent)
+
+SELECT name, continent
+FROM world x
+WHERE population > ALL(SELECT population*3 FROM world y WHERE x.continent = y.continent AND x.name <> y.name)
