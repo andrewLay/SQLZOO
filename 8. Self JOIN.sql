@@ -47,3 +47,43 @@ WHERE a.stop = 115 AND b.stop = 137
 
 -- Give a list of the services which connect the stops 'Craiglockhart' and 'Tollcross'
 
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b
+ON (a.company = b.company AND a.num = b.num)
+JOIN stops c ON a.stop = c.id
+JOIN stops d ON b.stop = d.id
+WHERE c.name = 'Craiglockhart' AND d.name = 'Tollcross'
+
+-- Give a distinct list of the stops which may be reached from 'Craiglockhart' by taking one bus, including 'Craiglockhart' itself, offered by the LRT company
+
+SELECT DISTINCT d.name, a.company, a.num
+FROM route a JOIN route b
+ON (a.company = b.company AND a.num = b.num)
+JOIN stops c ON a.stop = c.id
+JOIN stops d ON b.stop = d.id
+WHERE c.name = 'Craiglockhart'
+
+-- Find the routes involving two buses that can go from Craiglockhart to Lochend; show both bus no.s and companies, along with the name of the stop for the transfer
+/* USE ('AS') ALIAS IN REFERENCE TO THE SUBQUERY RESULTS RETURNED FROM NESTED SELECTS FOR CROSSING MULTIPLE SUBQUERY RESULTS  */
+/* CLAUSAL CONDITIONAL: [ON (1) AND (2)] VS. [ON (1) WHERE (2)] MAKES NO DIFFERENCE FOR INNER JOINS */
+
+SELECT bus1.num, bus1.company, stops.name, bus2.num, bus2.company FROM 
+
+(
+SELECT a.num, a.company, b.stop
+FROM route a
+JOIN route b ON (a.num = b.num AND a.company = b.company)
+JOIN stops c ON (a.stop = c.id AND c.name = 'Craiglockhart')
+) AS bus1
+
+JOIN
+
+(
+SELECT d.num, d.company, e.stop
+FROM route d
+JOIN route e ON (d.num = e.num AND d.company = e.company)
+JOIN stops f ON (d.stop = f.id AND f.name = 'Lochend')
+) AS bus2
+
+ON bus1.stop = bus2.stop
+JOIN stops ON bus1.stop = stops.id
