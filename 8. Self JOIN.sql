@@ -1,7 +1,7 @@
 /*
 TABLE:
-1) stops(id, name)
-2) route(num, company, pos, stop)
+1. stops(id, name)
+2. route(num, company, pos, stop)
 */
 
 -- Give the id and the name for the stops on the '4' 'LRT' service
